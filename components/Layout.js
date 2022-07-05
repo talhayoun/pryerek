@@ -13,10 +13,8 @@ const Layout = ({ children, cartItems, setCartItems }) => {
     const { productsState, dispatchProducts } = useContext(ProductsContext);
 
     useEffect(() => {
-        console.log("HERE")
         const fetchedProducts = productsState?.fetchedAllProducts;
         if (!fetchedProducts) {
-            console.log("HERE111")
             const getProducts = async () => {
                 const response = await fetchedAllProducts();
                 const products = response?.data?.products;

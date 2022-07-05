@@ -1,11 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { fetchProductsByCategoryId } from "../../apis/products";
 import { ProductsContext } from "../../context/productsContext";
-// import Cheese from "../../public/images/nav/boxes/cheese.jpeg";
-// import Farm from "../../public/images/nav/boxes/farm.png";
-// import Fruits from "../../public/images/nav/boxes/fruits.jpeg";
-// import Popc from "../../public/images/nav/boxes/Popc.jpeg";
-// import Vegetables from "../../public/images/nav/boxes/Vegetables.jpeg";
 import { replaceProductsAction } from "../../store/actions/productsActions";
 
 const images = [

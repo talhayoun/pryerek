@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsWhatsapp, BsFillTelephoneFill } from "react-icons/bs";
 import { FaAngleDown } from "react-icons/fa";
 import Link from "next/link";
 import { Nav } from "./Home/Nav";
+import { ProductsContext } from "../context/productsContext";
+import { replaceProductsAction } from "../store/actions/productsActions";
 
 const Header = ({ cartTog, setCartTog, cartItems }) => {
     const [mobileNavTog, setMobileNavTog] = useState(false);
     const [catsTog, setCatsTog] = useState(false);
+
+    const { productsState, dispatchProducts } = useContext(ProductsContext);
+
+    const onClickCategory = (num) => {
+        const filteredProducts = productsState.allProducts[num];
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
+        dispatchProducts(replaceProductsAction(filteredProducts));
+    };
+
+    const onClickCategoryList = () => {
+
+        setCatsTog(prevState => {
+            if (prevState) {
+                setMobileNavTog(false);
+            }
+            return !prevState
+        });
+    }
 
     return (
         <>
@@ -30,34 +54,21 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
 
                         <a
                             className="header-link dropdown-link"
-                            onClick={() => setCatsTog(!catsTog)}
+                            onClick={onClickCategoryList}
                         >
                             <span>
                                 קטגוריות <FaAngleDown />
                             </span>
                             {catsTog && (
                                 <div className="dropdown">
-                                    <Link href="/category/1">
-                                        <a>ירקות</a>
-                                    </Link>
-                                    <Link href="/category/2">
-                                        <a>פירות</a>
-                                    </Link>
-                                    <Link href="/category/3">
-                                        <a>מעדנייה</a>
-                                    </Link>
-                                    <Link href="/category/4">
-                                        <a>ירק ופטריות</a>
-                                    </Link>
-                                    <Link href="/category/5">
-                                        <a>מזווה</a>
-                                    </Link>
-                                    <Link href="/category/6">
-                                        <a>יבשים</a>
-                                    </Link>
-                                    <Link href="/category/7">
-                                        <a>מבצעים</a>
-                                    </Link>
+                                    <a onClick={() => onClickCategory(1)}>ירקות</a>
+
+                                    <a onClick={() => onClickCategory(2)}>פירות</a>
+                                    <a onClick={() => onClickCategory(3)}>מעדנייה</a>
+                                    <a>ירק ופטריות</a>
+                                    <a onClick={() => onClickCategory(4)}>מזווה</a>
+                                    <a onClick={() => onClickCategory(5)}>יבשים</a>
+                                    <a onClick={() => onClickCategory(6)}>מבצעים</a>
                                 </div>
                             )}
                         </a>
