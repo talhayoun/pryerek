@@ -5,6 +5,7 @@ import ProductShowcase from "../components/ProductShowcase";
 import { ProductsContext } from "../context/productsContext";
 import { replaceProductsAction } from "../store/actions/productsActions";
 import ReactPaginate from "react-paginate";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Home({ cartItems, setCartItems }) {
 	const [curPage, setCurPage] = useState(1);
@@ -14,9 +15,10 @@ export default function Home({ cartItems, setCartItems }) {
 	const [pageCount, setPageCount] = useState(0);
 	const [itemOffset, setItemOffset] = useState(0);
 	const [pageNumber, setPageNumber] = useState(0);
-	let itemsPerPage = 10;
+	let itemsPerPage = 12;
 
 	const lastProductsLength = useRef(null);
+	const productsLength = useRef(null);
 
 	const loadProducts = () => {
 		let query = "";
@@ -41,40 +43,58 @@ export default function Home({ cartItems, setCartItems }) {
 		loadProducts();
 	}, [searchKeywords]);
 
-	useEffect(() => {
-		// Scroll to top when page changes
-		window.scroll({
-			top: 0,
-			left: 0,
-			behavior: "smooth",
-		});
-	}, [curPage, currentItems]);
+	// useEffect(() => {
+	// 	// Scroll to top when page changes
+	// 	window.scroll({
+	// 		top: 0,
+	// 		left: 0,
+	// 		behavior: "smooth",
+	// 	});
+	// }, [curPage, currentItems]);
 
-	useEffect(() => {
-		if (productsState?.products?.length > 0) {
-			let currentItemOffset = itemOffset;
-			if (productsState.products.length !== lastProductsLength.current) {
-				lastProductsLength.current = productsState.products.length;
-				setPageNumber(0);
-				currentItemOffset = 0;
-			}
-			const endOffset = currentItemOffset + itemsPerPage;
-
-			setCurrentItems(
-				productsState.products.slice(currentItemOffset, endOffset)
-			);
-			setPageCount(Math.ceil(productsState.products.length / itemsPerPage));
-		}
-	}, [itemOffset, itemsPerPage, productsState.products]);
-
-	const handlePageClick = (event) => {
-		const newOffset =
-			(event.selected * itemsPerPage) % productsState.products.length;
-
-		setItemOffset(newOffset);
-
-		setPageNumber(event.selected);
+	const fetchMoreProducts = () => {
+		console.log(lastProductsLength.current, productsLength)
+		if (lastProductsLength.current + 10 >= productsLength) return;
+		setCurrentItems(
+			productsState.products.slice(0, lastProductsLength.current + 10)
+		);
+		lastProductsLength.current = lastProductsLength.current + 10;
 	};
+
+	useEffect(() => {
+		console.log(currentItems)
+	}, [currentItems])
+	useEffect(() => {
+		productsLength.current = productsState?.products?.length;
+		lastProductsLength.current = 0;
+		fetchMoreProducts()
+
+	}, [productsState])
+	//   useEffect(() => {
+	//     if (productsState?.products?.length > 0) {
+	//       let currentItemOffset = itemOffset;
+	//       if (productsState.products.length !== lastProductsLength.current) {
+	//         lastProductsLength.current = productsState.products.length;
+	//         setPageNumber(0);
+	//         currentItemOffset = 0;
+	//       }
+	//       const endOffset = currentItemOffset + itemsPerPage;
+
+	//       setCurrentItems(
+	//         productsState.products.slice(currentItemOffset, endOffset)
+	//       );
+	//       setPageCount(Math.ceil(productsState.products.length / itemsPerPage));
+	//     }
+	//   }, [itemOffset, itemsPerPage, productsState.products]);
+
+	//   const handlePageClick = (event) => {
+	//     const newOffset =
+	//       (event.selected * itemsPerPage) % productsState.products.length;
+
+	//     setItemOffset(newOffset);
+
+	//     setPageNumber(event.selected);
+	//   };
 
 	return (
 		<>
@@ -98,27 +118,33 @@ export default function Home({ cartItems, setCartItems }) {
 						<p id="no-products-found-p">לא נמצאו מוצרים התואמים את החיפוש.</p>
 					)}
 
-					<div id="main-products-list">
-						{currentItems &&
-							currentItems.map((product) => (
-								<ProductShowcase
-									key={product._id}
-									id={product._id}
-									cartItems={cartItems}
-									minAmount={product.minAmount}
-									setCartItems={setCartItems}
-									description={product.description}
-									name={product.name}
-									price={product.price}
-									salePrice={product.salePrice}
-									unit={product.unitType}
-									badge={product.badge}
-									image={`https://eropa.co.il/fruits/uploads/${product.id}.jpg `}
-								/>
-							))}
-					</div>
-
-					<ReactPaginate
+					<InfiniteScroll
+						dataLength={currentItems?.length ?? 0}
+						next={fetchMoreProducts}
+						hasMore={true}
+					// loader={<h4>Loading...</h4>}
+					>
+						<div id="main-products-list">
+							{currentItems &&
+								currentItems.map((product) => (
+									<ProductShowcase
+										key={product._id}
+										id={product._id}
+										cartItems={cartItems}
+										minAmount={product.minAmount}
+										setCartItems={setCartItems}
+										description={product.description}
+										name={product.name}
+										price={product.price}
+										salePrice={product.salePrice}
+										unit={product.unitType}
+										badge={product.badge}
+										image={`https://eropa.co.il/fruits/uploads/${product.id}.jpg `}
+									/>
+								))}
+						</div>
+					</InfiniteScroll>
+					{/* <ReactPaginate
 						breakLabel="..."
 						nextLabel={""}
 						onPageChange={handlePageClick}
@@ -130,8 +156,7 @@ export default function Home({ cartItems, setCartItems }) {
 						activeLinkClassName="pagination-item active"
 						pageClassName="pagination-item"
 						containerClassName="home-pagination"
-					/>
-
+					/> */}
 				</div>
 			</div>
 		</>

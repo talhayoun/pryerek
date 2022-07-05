@@ -22,6 +22,8 @@
     #main-products-list {
         padding: 0 10px;
         box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 1fr;
     }
 
     #main-products-list .product-showcase {
@@ -29,12 +31,15 @@
     }
 
     .product-showcase-add-to-cart-form {
-        flex-direction: column;
+        flex-direction: row;
     }
 
     .product-showcase .product-showcase-add-to-cart {
         /* width: 100%; */
         max-width: 100%;
+    }
+    .product-showcase{
+        width: 100% !important;
     }
 
     .slider-item {

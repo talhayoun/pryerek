@@ -8,14 +8,13 @@ import { ProductsContext } from "../../context/productsContext";
 // import Vegetables from "../../public/images/nav/boxes/Vegetables.jpeg";
 import { replaceProductsAction } from "../../store/actions/productsActions";
 
-
 const images = [
     "/images/nav/boxes/cheese.jpeg",
-    "/images/nav/boxes/farm.png",
+    "/images/nav/boxes/bread.jpeg",
     "/images/nav/boxes/fruits.jpeg",
     "/images/nav/boxes/popc.jpeg",
-    "/images/nav/boxes/vegetables.jpeg"
-]
+    "/images/nav/boxes/vegetables.jpeg",
+];
 
 export const NavDropdown = (props) => {
     const { num, changeNum, visible, setVisible } = props;
@@ -29,7 +28,12 @@ export const NavDropdown = (props) => {
     };
 
     const handleImageClick = async () => {
-        const filteredProducts = productsState.allProducts[num]
+        const filteredProducts = productsState.allProducts[num];
+        window.scroll({
+            top: 0,
+            left: 0,
+            behavior: "smooth",
+        });
         dispatchProducts(replaceProductsAction(filteredProducts));
     };
 
@@ -49,10 +53,10 @@ export const NavDropdown = (props) => {
 
         switch (num) {
             case 1:
-                setImgSrc(images[2]);
+                setImgSrc(images[4]);
                 break;
             case 2:
-                setImgSrc(images[4]);
+                setImgSrc(images[2]);
                 break;
             case 3:
                 setImgSrc(images[0]);
@@ -93,9 +97,9 @@ export const NavDropdown = (props) => {
                     <div style={{ padding: "5% 10%", borderLeft: "1px solid #363636" }}>
                         <div
                             onClick={handleImageClick}
-                            className={'nav-img'}
+                            className={"nav-img"}
                             style={{
-                                height: '150px',
+                                height: "150px",
                                 background: `url('${imgSrc}')`,
                                 cursor: "pointer",
                                 width: "150px",
@@ -122,8 +126,9 @@ export const NavDropdown = (props) => {
                                 gap: "20px",
                             }}
                         >
-                            {products?.map((currentProduct) => (
+                            {products?.map((currentProduct, index) => (
                                 <div
+                                    key={index}
                                     className="nav-dropdown-item"
                                     style={{
                                         cursor: "pointer",
