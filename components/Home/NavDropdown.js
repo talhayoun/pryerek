@@ -13,8 +13,8 @@ const images = [
     "/images/nav/boxes/cheese.jpeg",
     "/images/nav/boxes/farm.png",
     "/images/nav/boxes/fruits.jpeg",
-    "/images/nav/boxes/Popc.jpeg",
-    "/images/nav/boxes/Vegetables.jpeg"
+    "/images/nav/boxes/popc.jpeg",
+    "/images/nav/boxes/vegetables.jpeg"
 ]
 
 export const NavDropdown = (props) => {
