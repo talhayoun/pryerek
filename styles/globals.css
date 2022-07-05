@@ -511,6 +511,10 @@ a {
   z-index:99999;
 }
 
+.nav-img{
+	background-size: contain !important;
+}
+
 /* Slider */
 
 .slider-item {

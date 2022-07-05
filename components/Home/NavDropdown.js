@@ -1,12 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { fetchProductsByCategoryId } from "../../apis/products";
 import { ProductsContext } from "../../context/productsContext";
-import Cheese from "../../public/images/nav/boxes/cheese.jpeg";
-import Farm from "../../public/images/nav/boxes/farm.png";
-import Fruits from "../../public/images/nav/boxes/fruits.jpeg";
-import Popc from "../../public/images/nav/boxes/Popc.jpeg";
-import Vegetables from "../../public/images/nav/boxes/Vegetables.jpeg";
+// import Cheese from "../../public/images/nav/boxes/cheese.jpeg";
+// import Farm from "../../public/images/nav/boxes/farm.png";
+// import Fruits from "../../public/images/nav/boxes/fruits.jpeg";
+// import Popc from "../../public/images/nav/boxes/Popc.jpeg";
+// import Vegetables from "../../public/images/nav/boxes/Vegetables.jpeg";
 import { replaceProductsAction } from "../../store/actions/productsActions";
+
+
+const images = [
+    "/images/nav/boxes/cheese.jpeg",
+    "/images/nav/boxes/farm.png",
+    "/images/nav/boxes/fruits.jpeg",
+    "/images/nav/boxes/Popc.jpeg",
+    "/images/nav/boxes/Vegetables.jpeg"
+]
 
 export const NavDropdown = (props) => {
     const { num, changeNum, visible, setVisible } = props;
@@ -40,22 +49,22 @@ export const NavDropdown = (props) => {
 
         switch (num) {
             case 1:
-                setImgSrc(Fruits);
+                setImgSrc(images[2]);
                 break;
             case 2:
-                setImgSrc(Vegetables);
+                setImgSrc(images[4]);
                 break;
             case 3:
-                setImgSrc(Cheese);
+                setImgSrc(images[0]);
                 break;
             case 4:
-                setImgSrc(Vegetables);
+                setImgSrc(images[4]);
                 break;
             case 5:
-                setImgSrc(Farm);
+                setImgSrc(images[1]);
                 break;
             case 6:
-                setImgSrc(Popc);
+                setImgSrc(images[3]);
                 break;
             default:
                 break;
@@ -82,10 +91,12 @@ export const NavDropdown = (props) => {
                     }}
                 >
                     <div style={{ padding: "5% 10%", borderLeft: "1px solid #363636" }}>
-                        <img
+                        <div
                             onClick={handleImageClick}
-                            src={imgSrc.src}
+                            className={'nav-img'}
                             style={{
+                                height: '150px',
+                                background: `url('${imgSrc}')`,
                                 cursor: "pointer",
                                 width: "150px",
                                 boxShadow: "0px 0px 10px 0px rgb(0 0 0 / 50%)",
