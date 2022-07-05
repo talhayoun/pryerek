@@ -82,7 +82,7 @@ a {
 	background-color: #fff;
 	padding: 20px 25px;
 	display: flex;
-	justify-content: space-between;
+	justify-content: center;
 	align-items: center;
 	position: fixed;
 	top: 0;
@@ -99,6 +99,7 @@ a {
 #header-right {
 	display: flex;
 	align-items: center;
+	gap: 20px;
 }
 
 #header-links {
@@ -125,6 +126,10 @@ a {
 	background: #4caf50;
 }
 
+#products-search-form{
+	width:300px;
+}
+
 .dropdown-link span {
 	display: flex;
 	align-items: center;
@@ -133,7 +138,9 @@ a {
 .dropdown-link span svg {
 	margin-right: 5px;
 }
-
+.categories-header{
+	display: none !important;
+}
 .dropdown {
 	position: absolute;
 	top: 100%;
@@ -143,7 +150,7 @@ a {
 	flex-direction: column;
 	border-radius: 5px;
 	box-shadow: 0 0 30px #9a9a9a3b;
-	display: flex;
+	display: none;
 	transition: 0.3s ease-in-out;
 	margin-top: 37px;
 	padding: 20px;
@@ -171,7 +178,7 @@ a {
 }
 
 #header-cart-icon .icon {
-	font-size: 35px;
+	font-size: 40px;
 }
 
 #header-cart-icon .number {
@@ -501,6 +508,7 @@ a {
   transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 50px;
   padding: 0px 100px 0 100px;
   font-size: 25px;
@@ -532,7 +540,6 @@ a {
 	border-radius: 4px;
 	display: block;
 	width: 100%;
-	margin-top: 20px;
 }
 
 /* Product Showcase */

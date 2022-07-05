@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/productsContext";
-import { replaceProductsAction } from "../../store/actions/productsActions";
+import { changeDropdownVisibilityAction, replaceProductsAction } from "../../store/actions/productsActions";
 
 const images = [
     "/images/nav/boxes/cheese.jpeg",
@@ -11,14 +11,14 @@ const images = [
 ];
 
 export const NavDropdown = (props) => {
-    const { num, changeNum, visible, setVisible } = props;
+    const { num, changeNum } = props;
     const [products, setProducts] = useState([]);
     const [imgSrc, setImgSrc] = useState("");
 
     const { productsState, dispatchProducts } = useContext(ProductsContext);
     const handleMouseLeave = () => {
         changeNum(null);
-        setVisible(false);
+        dispatchProducts(changeDropdownVisibilityAction(false))
     };
 
     const handleImageClick = async () => {
@@ -35,6 +35,7 @@ export const NavDropdown = (props) => {
         if (num) {
             const fetchProducts = async () => {
                 const filteredProducts = productsState.allProducts[num];
+                console.log(productsState, "!!")
                 const slicedProducts = [];
                 for (let i = 0; i < 6 && i < filteredProducts?.length; i++) {
                     slicedProducts.push(filteredProducts[i]);
@@ -64,20 +65,23 @@ export const NavDropdown = (props) => {
             case 6:
                 setImgSrc(images[3]);
                 break;
+            case 7:
+                setImgSrc(images[3]);
+                break;
             default:
                 break;
         }
-        if (num) setVisible(true);
+        if (num) dispatchProducts(changeDropdownVisibilityAction(true))
     }, [num]);
     return (
         <>
-            {visible && (
+            {productsState?.dropdownVisible && (
                 <div
                     className="dropdown-container"
                     onMouseLeave={handleMouseLeave}
                     style={{
                         position: "absolute",
-                        top: "70px",
+                        top: "60px",
                         zIndex: "999",
                         background: "#FFF",
                         width: "80%",

@@ -5,8 +5,8 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Cart from "./Cart/Cart";
 import { ProductsContext } from "../context/productsContext";
-import { fetchedAllProducts } from "../apis/products";
-import { setAllProductsAction } from "../store/actions/productsActions";
+import { fetchedAllProducts, fetchProductsByCategoryId } from "../apis/products";
+import { addDiscountProductsAction, setAllProductsAction } from "../store/actions/productsActions";
 
 const Layout = ({ children, cartItems, setCartItems }) => {
     const [cartTog, setCartTog] = useState(false);
@@ -19,8 +19,17 @@ const Layout = ({ children, cartItems, setCartItems }) => {
                 const response = await fetchedAllProducts();
                 const products = response?.data?.products;
                 dispatchProducts(setAllProductsAction(products));
+                fetchDiscountProducts();
             };
             getProducts();
+
+            const fetchDiscountProducts = async () => {
+                console.log("here")
+                const response = await fetchProductsByCategoryId(7);
+                console.log(response, "##")
+                const products = response?.data?.products;
+                dispatchProducts(addDiscountProductsAction(products));
+            }
         }
     }, []);
 

@@ -16,6 +16,12 @@
 }
 
 @media screen and (max-width: 768px) {
+    .dropdown{
+        display: flex;
+    }
+    .categories-header{
+        display: block !important;
+    }
     .nav{
         display:none;
     }
@@ -23,7 +29,8 @@
         padding: 0 10px;
         box-sizing: border-box;
         display: grid;
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
     }
 
     #main-products-list .product-showcase {
@@ -31,12 +38,12 @@
     }
 
     .product-showcase-add-to-cart-form {
-        flex-direction: row;
+        flex-direction: column;
     }
 
     .product-showcase .product-showcase-add-to-cart {
         /* width: 100%; */
-        max-width: 100%;
+        max-width: 50%;
     }
     .product-showcase{
         width: 100% !important;

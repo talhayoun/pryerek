@@ -7,15 +7,21 @@ import Mushrooms from "../../public/images/nav/mushrooms.svg";
 import Nuts from "../../public/images/nav/nuts.svg";
 import Wine from "../../public/images/nav/wine.svg";
 import { NavDropdown } from "./NavDropdown";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ProductsContext } from "../../context/productsContext"
+import { changeDropdownVisibilityAction } from "../../store/actions/productsActions";
 
 export const Nav = () => {
     const [hoverNum, setHoverNum] = useState(null);
-    const [visible, setVisible] = useState(false);
 
+    const { productsState, dispatchProducts } = useContext(ProductsContext)
+
+    const handleHover = () => {
+        dispatchProducts(changeDropdownVisibilityAction(true))
+    }
 
     return (
-        <div className="nav">
+        <div className="nav" onMouseEnter={handleHover}>
             <NavItem title={"ירקות"} num={1} changeNum={setHoverNum}>
                 <Broccoli style={{ width: "20px" }} />
             </NavItem>
@@ -34,14 +40,12 @@ export const Nav = () => {
             <NavItem title={"יבשים"} num={6} changeNum={setHoverNum}>
                 <Nuts style={{ width: "20px" }} />
             </NavItem>
-            <NavItem title={"מבצעים"}>
+            <NavItem title={"מבצעים"} num={7} changeNum={setHoverNum}>
                 <Discount style={{ width: "30px" }} />
             </NavItem>
             <NavDropdown
                 num={hoverNum}
                 changeNum={setHoverNum}
-                visible={visible}
-                setVisible={setVisible}
             />
         </div>
     );

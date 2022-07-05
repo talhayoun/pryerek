@@ -1,16 +1,21 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { BsWhatsapp, BsFillTelephoneFill } from "react-icons/bs";
 import { FaAngleDown } from "react-icons/fa";
 import Link from "next/link";
 import { Nav } from "./Home/Nav";
 import { ProductsContext } from "../context/productsContext";
-import { replaceProductsAction } from "../store/actions/productsActions";
+import { changeDropdownVisibilityAction, replaceProductsAction } from "../store/actions/productsActions";
+import { useRouter } from "next/dist/client/router";
+import axios from "axios";
 
 const Header = ({ cartTog, setCartTog, cartItems }) => {
     const [mobileNavTog, setMobileNavTog] = useState(false);
     const [catsTog, setCatsTog] = useState(false);
+    const [searchKeywords, setSearchKeywords] = useState("");
 
+    const router = useRouter()
     const { productsState, dispatchProducts } = useContext(ProductsContext);
 
     const onClickCategory = (num) => {
@@ -21,6 +26,7 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
             behavior: "smooth",
         });
         dispatchProducts(replaceProductsAction(filteredProducts));
+        router.push("/")
     };
 
     const onClickCategoryList = () => {
@@ -33,9 +39,31 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
         });
     }
 
+    const onHoverHeader = () => {
+        dispatchProducts(changeDropdownVisibilityAction(false));
+    }
+
+    const loadProducts = () => {
+        let query = "";
+
+        if (searchKeywords.length) {
+            query += `&search=${searchKeywords}`;
+        }
+
+        axios
+            .get(process.env.API_URL + "/products/?page=1" + query)
+            .then((res) => {
+                dispatchProducts(replaceProductsAction(res.data.products));
+            });
+    };
+
+    useEffect(() => {
+        loadProducts();
+    }, [searchKeywords])
+
     return (
         <>
-            <div id="header">
+            <div id="header" onMouseEnter={onHoverHeader}>
                 <div id="header-right">
                     <Link href="/">
                         <a>
@@ -44,19 +72,28 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
                             </div>
                         </a>
                     </Link>
+                    <form action="" id="products-search-form">
+                        <input
+                            type="text"
+                            placeholder="חפש/י מוצרים"
+                            value={searchKeywords}
+                            onChange={(e) => setSearchKeywords(e.target.value)}
+                            id="product-search-input"
+                        />
+                    </form>
                     <div id="header-links" className={`${mobileNavTog ? "active" : ""}`}>
                         <Link href="/">
-                            <a className="header-link active">דף הבית</a>
+                            <a onClick={() => setMobileNavTog(false)} className="header-link active">דף הבית</a>
                         </Link>
                         <Link href="/about">
-                            <a className="header-link">אודות</a>
+                            <a onClick={() => setMobileNavTog(false)} className="header-link">אודות</a>
                         </Link>
 
                         <a
                             className="header-link dropdown-link"
                             onClick={onClickCategoryList}
                         >
-                            <span>
+                            <span className="categories-header">
                                 קטגוריות <FaAngleDown />
                             </span>
                             {catsTog && (
@@ -74,7 +111,7 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
                         </a>
 
                         <Link href="/legal">
-                            <a className="header-link">תקנון</a>
+                            <a onClick={() => setMobileNavTog(false)} className="header-link">תקנון</a>
                         </Link>
                     </div>
                 </div>

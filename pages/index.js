@@ -4,7 +4,6 @@ import Slider from "../components/Home/Slider";
 import ProductShowcase from "../components/ProductShowcase";
 import { ProductsContext } from "../context/productsContext";
 import { replaceProductsAction } from "../store/actions/productsActions";
-import ReactPaginate from "react-paginate";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Home({ cartItems, setCartItems }) {
@@ -12,11 +11,6 @@ export default function Home({ cartItems, setCartItems }) {
 	const [searchKeywords, setSearchKeywords] = useState("");
 	const { productsState, dispatchProducts } = useContext(ProductsContext);
 	const [currentItems, setCurrentItems] = useState(null);
-	const [pageCount, setPageCount] = useState(0);
-	const [itemOffset, setItemOffset] = useState(0);
-	const [pageNumber, setPageNumber] = useState(0);
-	let itemsPerPage = 12;
-
 	const lastProductsLength = useRef(null);
 	const productsLength = useRef(null);
 
@@ -43,17 +37,8 @@ export default function Home({ cartItems, setCartItems }) {
 		loadProducts();
 	}, [searchKeywords]);
 
-	// useEffect(() => {
-	// 	// Scroll to top when page changes
-	// 	window.scroll({
-	// 		top: 0,
-	// 		left: 0,
-	// 		behavior: "smooth",
-	// 	});
-	// }, [curPage, currentItems]);
 
 	const fetchMoreProducts = () => {
-		console.log(lastProductsLength.current, productsLength)
 		if (lastProductsLength.current + 10 >= productsLength) return;
 		setCurrentItems(
 			productsState.products.slice(0, lastProductsLength.current + 10)
@@ -62,39 +47,11 @@ export default function Home({ cartItems, setCartItems }) {
 	};
 
 	useEffect(() => {
-		console.log(currentItems)
-	}, [currentItems])
-	useEffect(() => {
 		productsLength.current = productsState?.products?.length;
 		lastProductsLength.current = 0;
 		fetchMoreProducts()
 
 	}, [productsState])
-	//   useEffect(() => {
-	//     if (productsState?.products?.length > 0) {
-	//       let currentItemOffset = itemOffset;
-	//       if (productsState.products.length !== lastProductsLength.current) {
-	//         lastProductsLength.current = productsState.products.length;
-	//         setPageNumber(0);
-	//         currentItemOffset = 0;
-	//       }
-	//       const endOffset = currentItemOffset + itemsPerPage;
-
-	//       setCurrentItems(
-	//         productsState.products.slice(currentItemOffset, endOffset)
-	//       );
-	//       setPageCount(Math.ceil(productsState.products.length / itemsPerPage));
-	//     }
-	//   }, [itemOffset, itemsPerPage, productsState.products]);
-
-	//   const handlePageClick = (event) => {
-	//     const newOffset =
-	//       (event.selected * itemsPerPage) % productsState.products.length;
-
-	//     setItemOffset(newOffset);
-
-	//     setPageNumber(event.selected);
-	//   };
 
 	return (
 		<>
@@ -121,8 +78,8 @@ export default function Home({ cartItems, setCartItems }) {
 					<InfiniteScroll
 						dataLength={currentItems?.length ?? 0}
 						next={fetchMoreProducts}
+						style={{ overflow: 'unset !important' }}
 						hasMore={true}
-					// loader={<h4>Loading...</h4>}
 					>
 						<div id="main-products-list">
 							{currentItems &&
@@ -144,19 +101,6 @@ export default function Home({ cartItems, setCartItems }) {
 								))}
 						</div>
 					</InfiniteScroll>
-					{/* <ReactPaginate
-						breakLabel="..."
-						nextLabel={""}
-						onPageChange={handlePageClick}
-						pageRangeDisplayed={5}
-						pageCount={pageCount}
-						forcePage={pageNumber}
-						previousLabel={""}
-						renderOnZeroPageCount={null}
-						activeLinkClassName="pagination-item active"
-						pageClassName="pagination-item"
-						containerClassName="home-pagination"
-					/> */}
 				</div>
 			</div>
 		</>
