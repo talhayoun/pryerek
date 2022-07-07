@@ -16,6 +16,9 @@
 }
 
 @media screen and (max-width: 768px) {
+    #products-search-form-nav{
+        display: none;
+    }
     .dropdown{
         display: flex;
     }
@@ -60,6 +63,7 @@
     #header {
         height: 80px;
         box-sizing: border-box;
+        justify-content: space-between;
     }
 
     #header-links {

@@ -72,7 +72,7 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
                             </div>
                         </a>
                     </Link>
-                    <form action="" id="products-search-form">
+                    <form action="" id="products-search-form-nav">
                         <input
                             type="text"
                             placeholder="חפש/י מוצרים"
