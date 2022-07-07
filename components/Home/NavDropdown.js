@@ -1,10 +1,11 @@
+import { useRouter } from "next/dist/client/router";
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/productsContext";
 import { changeDropdownVisibilityAction, replaceProductsAction } from "../../store/actions/productsActions";
 
 const images = [
     "/images/nav/boxes/cheese.jpeg",
-    "/images/nav/boxes/bread.jpeg",
+    "/images/nav/boxes/bread.png",
     "/images/nav/boxes/fruits.jpeg",
     "/images/nav/boxes/popc.jpeg",
     "/images/nav/boxes/vegetables.jpeg",
@@ -15,11 +16,14 @@ export const NavDropdown = (props) => {
     const [products, setProducts] = useState([]);
     const [imgSrc, setImgSrc] = useState("");
 
+
+    const router = useRouter();
     const { productsState, dispatchProducts } = useContext(ProductsContext);
     const handleMouseLeave = () => {
         changeNum(null);
         dispatchProducts(changeDropdownVisibilityAction(false))
     };
+
 
     const handleImageClick = async () => {
         const filteredProducts = productsState.allProducts[num];
@@ -29,6 +33,7 @@ export const NavDropdown = (props) => {
             behavior: "smooth",
         });
         dispatchProducts(replaceProductsAction(filteredProducts));
+        router.push("/")
     };
 
     useEffect(() => {
