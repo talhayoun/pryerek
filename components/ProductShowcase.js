@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
     AiOutlineMinus,
     AiOutlinePlus,
@@ -24,15 +24,18 @@ const ProductShowcase = ({
     const [amount, setAmount] = useState(minAmount);
     const [discount, setDiscount] = useState(0);
 
+    const addButton = useRef()
     useEffect(() => {
         setAmount(minAmount);
     }, [minAmount]);
 
     const handleAddToCart = () => {
         document.getElementById("header-cart-icon").setAttribute("class", "grow");
+        addButton.current.className = 'grow'
 
         setTimeout(() => {
             document.getElementById("header-cart-icon").setAttribute("class", "");
+            addButton.current.className = ''
         }, 500);
 
         let found = false;
@@ -140,7 +143,6 @@ const ProductShowcase = ({
                     </span>
                 </div>
                 <div className="cart-item-amount-wrap">
-                    {/* <div className="cart-item-amount"> */}
                     <div className="cart-item-form-amount">
                         <button
                             className="cart-item-form-plus"
@@ -164,11 +166,11 @@ const ProductShowcase = ({
                             <AiOutlinePlus />
                         </button>
                     </div>
-                    {/* </div> */}
                 </div>
 
                 <div
-                    // className="cute-btn product-showcase-add-to-cart"
+                    ref={addButton}
+
                     style={{
                         background: "#3fbc72",
                         padding: "8px 13px",

@@ -1,4 +1,5 @@
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useRouter } from "next/dist/client/router";
 import { useContext } from "react";
 import { ProductsContext } from "../../context/productsContext";
 import { replaceProductsAction } from "../../store/actions/productsActions";
@@ -6,8 +7,8 @@ import { replaceProductsAction } from "../../store/actions/productsActions";
 export const NavItem = (props) => {
     const { num, title, changeNum } = props;
 
+    const router = useRouter();
     const { productsState, dispatchProducts } = useContext(ProductsContext);
-
     const handleImageClick = async () => {
         const filteredProducts = productsState.allProducts[num];
         window.scroll({
@@ -16,6 +17,7 @@ export const NavItem = (props) => {
             behavior: "smooth",
         });
         dispatchProducts(replaceProductsAction(filteredProducts));
+        router.push("/")
     };
 
     return (
