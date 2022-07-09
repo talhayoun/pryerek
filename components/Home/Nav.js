@@ -8,16 +8,14 @@ import Nuts from "../../public/images/nav/nuts.svg";
 import Wine from "../../public/images/nav/wine.svg";
 import { NavDropdown } from "./NavDropdown";
 import { useContext, useState } from "react";
-import { ProductsContext } from "../../context/productsContext"
-import { changeDropdownVisibilityAction } from "../../store/actions/productsActions";
+import { DropdownContext } from "../../store/dropdown";
 
 export const Nav = () => {
     const [hoverNum, setHoverNum] = useState(null);
 
-    const { productsState, dispatchProducts } = useContext(ProductsContext)
-
+    const { setIsDropdownVisible } = useContext(DropdownContext);
     const handleHover = () => {
-        dispatchProducts(changeDropdownVisibilityAction(true))
+        setIsDropdownVisible(true);
     }
 
     return (

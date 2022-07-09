@@ -24,9 +24,7 @@ const Layout = ({ children, cartItems, setCartItems }) => {
             getProducts();
 
             const fetchDiscountProducts = async () => {
-                console.log("here")
                 const response = await fetchProductsByCategoryId(7);
-                console.log(response, "##")
                 const products = response?.data?.products;
                 dispatchProducts(addDiscountProductsAction(products));
             }

@@ -529,7 +529,7 @@ a {
 	min-width: 100vw;
 	width: 100%;
 	color: #fff;
-	min-height: 600px;
+	min-height:500px;
 	background-size: cover !important;
 	background-position: center !important;
 }

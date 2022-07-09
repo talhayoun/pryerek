@@ -1,7 +1,8 @@
 import { useRouter } from "next/dist/client/router";
 import { useContext, useEffect, useState } from "react";
 import { ProductsContext } from "../../context/productsContext";
-import { changeDropdownVisibilityAction, replaceProductsAction } from "../../store/actions/productsActions";
+import { replaceProductsAction } from "../../store/actions/productsActions";
+import { DropdownContext } from "../../store/dropdown";
 
 const images = [
     "/images/nav/boxes/cheese.jpeg",
@@ -19,9 +20,11 @@ export const NavDropdown = (props) => {
 
     const router = useRouter();
     const { productsState, dispatchProducts } = useContext(ProductsContext);
+    const { isDropdownVisible, setIsDropdownVisible } = useContext(DropdownContext);
+
     const handleMouseLeave = () => {
         changeNum(null);
-        dispatchProducts(changeDropdownVisibilityAction(false))
+        setIsDropdownVisible(false)
     };
 
 
@@ -40,7 +43,6 @@ export const NavDropdown = (props) => {
         if (num) {
             const fetchProducts = async () => {
                 const filteredProducts = productsState.allProducts[num];
-                console.log(productsState, "!!")
                 const slicedProducts = [];
                 for (let i = 0; i < 6 && i < filteredProducts?.length; i++) {
                     slicedProducts.push(filteredProducts[i]);
@@ -76,11 +78,13 @@ export const NavDropdown = (props) => {
             default:
                 break;
         }
-        if (num) dispatchProducts(changeDropdownVisibilityAction(true))
+        if (num) {
+            setIsDropdownVisible(true)
+        }
     }, [num]);
     return (
         <>
-            {productsState?.dropdownVisible && (
+            {isDropdownVisible && (
                 <div
                     className="dropdown-container"
                     onMouseLeave={handleMouseLeave}

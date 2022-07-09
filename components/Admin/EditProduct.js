@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 
 const EditProduct = ({ id, product, setShowEdit }) => {
-    const [ categories, setCategoreis ] = useState([
+    const [categories, setCategoreis] = useState([
         {
             id: 1,
             name: 'ירקות'
@@ -33,17 +33,17 @@ const EditProduct = ({ id, product, setShowEdit }) => {
         }
     ]);
 
-    const [ feedback, setFeedback ] = useState('');
-    const [ name, setName ] = useState(product.name);
-    const [ min, setMin ] = useState(product.minAmount);
-    const [ stock, setStock ] = useState(product.availability);
-    const [ cat, setCat ] = useState(product.category);
-    const [ unit, setUnit ] = useState(product.unitType);
-    const [ price, setPrice ] = useState(product.price);
-    const [ salePrice, setSalePrice ] = useState(product.salePrice);
-    const [ description, setDescription ] = useState(product.description);
-    const [ badge, setBadge ] = useState(product.badge);
-    const [ image, setImage ] = useState(null);
+    const [feedback, setFeedback] = useState('');
+    const [name, setName] = useState(product.name);
+    const [min, setMin] = useState(product.minAmount);
+    const [stock, setStock] = useState(product.availability);
+    const [cat, setCat] = useState(product.category);
+    const [unit, setUnit] = useState(product.unitType);
+    const [price, setPrice] = useState(product.price);
+    const [salePrice, setSalePrice] = useState(product.salePrice);
+    const [description, setDescription] = useState(product.description);
+    const [badge, setBadge] = useState(product.badge);
+    const [image, setImage] = useState(null);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -59,7 +59,6 @@ const EditProduct = ({ id, product, setShowEdit }) => {
             salePrice: salePrice,
             badge: badge
         }).then((res) => {
-            console.log(res);
             setFeedback(res.data);
 
             // Upload image
@@ -79,21 +78,21 @@ const EditProduct = ({ id, product, setShowEdit }) => {
         document.getElementById("file-select-product").click();
     }
 
-    return ( 
+    return (
         <div id="edit-product">
-            <div id="edit-product-bg" onClick={ () => setShowEdit(false) }></div>
+            <div id="edit-product-bg" onClick={() => setShowEdit(false)}></div>
             <form id="edit-product-form">
                 <div className="input-group">
-                    <input type="text" placeholder="שם המוצר" value={ name } onChange={ (e) => setName(e.target.value) } className="input-box" />
+                    <input type="text" placeholder="שם המוצר" value={name} onChange={(e) => setName(e.target.value)} className="input-box" />
                 </div>
-                
+
                 <div className="input-group">
-                    <input type="number" placeholder="כמות מינימום" value={ min } onChange={ (e) => setMin(e.target.value) } className="input-box" />
+                    <input type="number" placeholder="כמות מינימום" value={min} onChange={(e) => setMin(e.target.value)} className="input-box" />
                 </div>
 
                 <div className="input-group">
                     <label htmlFor="">במלאי</label>
-                    <select name="" id="" onChange={ (e) => setStock(e.target.value) }>
+                    <select name="" id="" onChange={(e) => setStock(e.target.value)}>
                         <option value="true">כן</option>
                         <option value="false">לא</option>
                     </select>
@@ -101,16 +100,16 @@ const EditProduct = ({ id, product, setShowEdit }) => {
 
                 <div className="input-group">
                     <label htmlFor="">קטגוריה</label>
-                    <select value={ cat } onChange={ (e) => setCat(e.target.value) }>
-                        { categories.map((cat) => (
-                            <option value={ cat.id }>{ cat.name }</option>
-                        )) }
+                    <select value={cat} onChange={(e) => setCat(e.target.value)}>
+                        {categories.map((cat) => (
+                            <option value={cat.id}>{cat.name}</option>
+                        ))}
                     </select>
                 </div>
 
                 <div className="input-group">
                     <label htmlFor="">סוג יחידה</label>
-                    <select name="" id="" onChange={ (e) => setUnit(e.target.value) }>
+                    <select name="" id="" onChange={(e) => setUnit(e.target.value)}>
                         <option value={`ק"ג`}>ק"ג</option>
                         <option value={`יחידה`}>יחידה</option>
                         <option value={`חבילה`}>חבילה</option>
@@ -118,34 +117,34 @@ const EditProduct = ({ id, product, setShowEdit }) => {
                 </div>
 
                 <div className="input-group">
-                    <input type="number" placeholder="מחיר" value={ price } onChange={ (e) => setPrice(e.target.value) } className="input-box" />
+                    <input type="number" placeholder="מחיר" value={price} onChange={(e) => setPrice(e.target.value)} className="input-box" />
                 </div>
 
                 <div className="input-group">
-                    <input type="number" placeholder="מחיר מבצע" value={ salePrice } onChange={ (e) => setSalePrice(e.target.value) } className="input-box" />
+                    <input type="number" placeholder="מחיר מבצע" value={salePrice} onChange={(e) => setSalePrice(e.target.value)} className="input-box" />
                 </div>
 
                 <div className="input-group">
-                    <input type="text" placeholder="תיאור" value={ description } onChange={ (e) => setDescription(e.target.value) } className="input-box" />
+                    <input type="text" placeholder="תיאור" value={description} onChange={(e) => setDescription(e.target.value)} className="input-box" />
                 </div>
 
                 <div className="input-group">
-                    <input type="text" placeholder="שילוט" value={ badge } onChange={ (e) => setBadge(e.target.value) } className="input-box" />
+                    <input type="text" placeholder="שילוט" value={badge} onChange={(e) => setBadge(e.target.value)} className="input-box" />
                 </div>
 
                 <div className="input-group">
                     <div className="cute-file-select">
-                        <input type="file" id="file-select-product" onChange={ (e) => setImage(e.target.files[0]) }/>
-                        <button className="cute-btn" onClick={ (e) => handleCuteSelect(e) }>בחר תמונה</button>
+                        <input type="file" id="file-select-product" onChange={(e) => setImage(e.target.files[0])} />
+                        <button className="cute-btn" onClick={(e) => handleCuteSelect(e)}>בחר תמונה</button>
                     </div>
                 </div>
 
-                { feedback && <p id="new-product-feedback">{ feedback }</p> }
+                {feedback && <p id="new-product-feedback">{feedback}</p>}
 
-                <input type="submit" onClick={ (e) => handleSubmit(e) } value="שמירה" />
+                <input type="submit" onClick={(e) => handleSubmit(e)} value="שמירה" />
             </form>
         </div>
-     );
+    );
 }
- 
+
 export default EditProduct;

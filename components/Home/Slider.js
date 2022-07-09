@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import Carousel from "react-material-ui-carousel";
-import { ProductsContext } from "../../context/productsContext";
-import { changeDropdownVisibilityAction } from "../../store/actions/productsActions";
+import { DropdownContext } from "../../store/dropdown";
 
 const slides = [
     {
@@ -19,10 +18,9 @@ const slides = [
 ];
 
 const Slider = () => {
-    const { productsState, dispatchProducts } = useContext(ProductsContext)
-
+    const { setIsDropdownVisible } = useContext(DropdownContext);
     const handleHover = () => {
-        dispatchProducts(changeDropdownVisibilityAction(false))
+        setIsDropdownVisible(false)
     }
     return (
         <Carousel>

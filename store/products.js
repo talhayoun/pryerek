@@ -1,8 +1,7 @@
-import { ADD_DISCOUNT_PRODUCTS, REPLACE_PRODUCTS, SET_PRODUCTS, TOGGLE_DROPDOWN } from "./actions/productsActions";
+import { ADD_DISCOUNT_PRODUCTS, REPLACE_PRODUCTS, SET_PRODUCTS, } from "./actions/productsActions";
 
 export const initialValue = {
     fetchedAllProducts: false,
-    dropdownVisible: false,
     allProducts: [],
     products: [],
 };
@@ -27,12 +26,8 @@ const productsReducer = (state, action) => {
             };
         case ADD_DISCOUNT_PRODUCTS:
             const cloneAllProducts = [...state.allProducts];
-            console.log(cloneAllProducts)
             cloneAllProducts[7] = action.products;
-            console.log(cloneAllProducts, "$$$")
             return { ...state, allProducts: cloneAllProducts }
-        case TOGGLE_DROPDOWN:
-            return { ...state, dropdownVisible: action.status }
         default:
             return { ...state };
     }

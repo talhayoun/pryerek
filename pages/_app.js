@@ -4,6 +4,7 @@ import Layout from "../components/Layout";
 import "../styles/globals.css";
 import "../styles/responsive.css";
 import { ProductsContextProvider } from "../context/productsContext";
+import { DropdownContextProvider } from "../store/dropdown";
 
 function MyApp({ Component, pageProps }) {
 	const [cartItems, setCartItems] = useState([]);
@@ -30,13 +31,15 @@ function MyApp({ Component, pageProps }) {
 			</Head>
 
 			<ProductsContextProvider>
-				<Layout cartItems={cartItems} setCartItems={setCartItems}>
-					<Component
-						{...pageProps}
-						cartItems={cartItems}
-						setCartItems={setCartItems}
-					/>
-				</Layout>
+				<DropdownContextProvider>
+					<Layout cartItems={cartItems} setCartItems={setCartItems}>
+						<Component
+							{...pageProps}
+							cartItems={cartItems}
+							setCartItems={setCartItems}
+						/>
+					</Layout>
+				</DropdownContextProvider>
 			</ProductsContextProvider>
 		</>
 	);

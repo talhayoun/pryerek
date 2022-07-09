@@ -6,9 +6,10 @@ import { FaAngleDown } from "react-icons/fa";
 import Link from "next/link";
 import { Nav } from "./Home/Nav";
 import { ProductsContext } from "../context/productsContext";
-import { changeDropdownVisibilityAction, replaceProductsAction } from "../store/actions/productsActions";
+import { replaceProductsAction } from "../store/actions/productsActions";
 import { useRouter } from "next/dist/client/router";
 import axios from "axios";
+import { DropdownContext } from "../store/dropdown";
 
 const Header = ({ cartTog, setCartTog, cartItems }) => {
     const [mobileNavTog, setMobileNavTog] = useState(false);
@@ -17,6 +18,7 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
 
     const router = useRouter()
     const { productsState, dispatchProducts } = useContext(ProductsContext);
+    const { setIsDropdownVisible } = useContext(DropdownContext);
 
     const onClickCategory = (num) => {
         const filteredProducts = productsState.allProducts[num];
@@ -40,7 +42,7 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
     }
 
     const onHoverHeader = () => {
-        dispatchProducts(changeDropdownVisibilityAction(false));
+        setIsDropdownVisible(false);
     }
 
     const loadProducts = () => {
