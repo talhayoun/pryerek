@@ -10,6 +10,7 @@ const images = [
     "/images/nav/boxes/fruits.jpeg",
     "/images/nav/boxes/popc.jpeg",
     "/images/nav/boxes/vegetables.jpeg",
+    "/images/nav/boxes/leafs.jpeg"
 ];
 
 export const NavDropdown = (props) => {
@@ -64,7 +65,7 @@ export const NavDropdown = (props) => {
                 setImgSrc(images[0]);
                 break;
             case 4:
-                setImgSrc(images[4]);
+                setImgSrc(images[5]);
                 break;
             case 5:
                 setImgSrc(images[1]);

@@ -106,10 +106,10 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
 
                                 <a onClick={() => onClickCategory(2)}>פירות</a>
                                 <a onClick={() => onClickCategory(3)}>מעדנייה</a>
-                                <a>ירק ופטריות</a>
-                                <a onClick={() => onClickCategory(4)}>מזווה</a>
-                                <a onClick={() => onClickCategory(5)}>יבשים</a>
-                                <a onClick={() => onClickCategory(6)}>מבצעים</a>
+                                <a onClick={() => onClickCategory(4)}>ירק ופטריות</a>
+                                <a onClick={() => onClickCategory(5)}>מזווה</a>
+                                <a onClick={() => onClickCategory(6)}>יבשים</a>
+                                <a onClick={() => onClickCategory(7)}>מבצעים</a>
                             </div>
                         )}
                     </a>
