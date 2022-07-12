@@ -5,8 +5,16 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Cart from "./Cart/Cart";
 import { ProductsContext } from "../context/productsContext";
-import { fetchedAllProducts, fetchProductsByCategoryId } from "../apis/products";
-import { addDiscountProductsAction, setAllProductsAction } from "../store/actions/productsActions";
+import {
+    fetchedAllProducts,
+    fetchProductsByCategoryId,
+} from "../apis/products";
+import {
+    addDiscountProductsAction,
+    setAllProductsAction,
+} from "../store/actions/productsActions";
+import { Nav } from "./Home/Nav";
+import { BsWhatsapp, BsFillTelephoneFill } from "react-icons/bs";
 
 const Layout = ({ children, cartItems, setCartItems }) => {
     const [cartTog, setCartTog] = useState(false);
@@ -27,13 +35,33 @@ const Layout = ({ children, cartItems, setCartItems }) => {
                 const response = await fetchProductsByCategoryId(7);
                 const products = response?.data?.products;
                 dispatchProducts(addDiscountProductsAction(products));
-            }
+            };
         }
     }, []);
 
     return (
         <div className="website-content">
-            <Header cartTog={cartTog} setCartTog={setCartTog} cartItems={cartItems} />
+            <div>
+                <Header
+                    cartTog={cartTog}
+                    setCartTog={setCartTog}
+                    cartItems={cartItems}
+                />
+                <Nav />
+            </div>
+
+            <a
+                href="https://api.whatsapp.com/send?phone=972528629030&amp;text=שלום פרי וירק ארצנו."
+                className="float"
+                target="_blank"
+                rel="noreferrer"
+            >
+                <BsWhatsapp />
+            </a>
+
+            <a href="tel:0528629030" id="call-btn">
+                <BsFillTelephoneFill />
+            </a>
             <Cart
                 cartTog={cartTog}
                 setCartTog={setCartTog}
