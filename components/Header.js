@@ -65,9 +65,7 @@ const Header = ({ cartTog, setCartTog, cartItems }) => {
                 <Link href="/">
                     <a>
                         <div id="header-logo">
-                            <div
-                            // src="/images/logo.jpg" alt=""
-                            />
+                            <div style={{ backgroundImage: "url('/images/logo.jpeg')" }} />
                         </div>
                     </a>
                 </Link>
